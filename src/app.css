@@ -1,0 +1,177 @@
+@import '@fontsource/overpass';
+@import '@fontsource/fira-mono';
+@import '@fontsource/material-icons';
+
+:root {
+  color-scheme: light dark;
+
+  --font-sans: 'Overpass', sans-serif;
+  --font-mono: 'Fira Mono', monospace;
+  --filter-shadow: drop-shadow(2px 4px 16px #0003);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --primary: #f39d0b;
+    --primary-content: #ffffff;
+    --neutral: #3c4448;
+    --neutral-content: #ffffff;
+    --base-100: #ffffff;
+    --base-200: #f5f5f5;
+    --base-300: #e4e4e4;
+    --base-content: #3c4448;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #f39d0b;
+    --primary-content: #000000;
+    --neutral: #3c4448;
+    --neutral-content: #ffffff;
+    --base-100: #19191a;
+    --base-200: #303335;
+    --base-300: #3c4448;
+    --base-content: #e4e4e4;
+  }
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  background-color: var(--base-100);
+  color: var(--base-content);
+  font-family: var(--font-sans);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+code {
+  font-family: var(--font-mono);
+  line-height: 1.7;
+  tab-size: 4;
+}
+
+p {
+  line-height: 1.6;
+}
+
+input {
+  border: 1px solid var(--base-300);
+  outline: none;
+  padding: 0.5rem 0.8rem;
+  font-size: inherit;
+  width: 100%;
+  border-radius: 0.25rem;
+}
+
+button {
+  border: 1px solid var(--base-300);
+  font-size: inherit;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  background-color: var(--base-100);
+}
+
+button:disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}
+
+button.button-primary {
+  background-color: var(--primary);
+  color: var(--primary-content);
+  border: none;
+}
+
+.icon {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  position: relative;
+
+  a.icon-link {
+    position: absolute;
+    left: -1.3em;
+    opacity: 0;
+    height: 1em;
+    width: 1.3em;
+    color: var(--base-300);
+  }
+}
+
+h1:hover,
+h2:hover,
+h3:hover,
+h4:hover,
+h5:hover,
+h6:hover {
+  a.icon-link {
+    opacity: 1;
+  }
+}
+
+mark {
+  background-color: var(--primary);
+  color: var(--primary-content);
+}
+
+.rehype-code-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: black;
+  color: white;
+  border-radius: 0.5rem 0.5rem 0 0;
+
+  button {
+    background-color: black;
+    color: white;
+    border: none;
+  }
+}
+
+pre {
+  margin: 0;
+  background-color: black;
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.rehype-code-title + pre {
+  border-radius: 0 0 0.5rem 0.5rem;
+}
