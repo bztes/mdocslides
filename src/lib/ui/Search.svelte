@@ -12,10 +12,10 @@
   let view = getContext('view');
 
   onMount(async () => {
-    const postTocs = await fetch(`${base}/api/posts/toc`).then((res) =>
+    const postSections = await fetch(`${base}/api/posts/toc`).then((res) =>
       res.json(),
     );
-    createPostsIndex(postTocs);
+    createPostsIndex(postSections);
     status = 'ready';
   });
 

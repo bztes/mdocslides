@@ -7,14 +7,14 @@ export const load: PageLoad = async ({ params, parent }) => {
 
   const component = postComponents[params.slug];
   const post = parentData.postMap[params.slug];
-  const postToc = parentData.postTocs[params.slug];
-  if (!post || !component || !postToc) {
+  const postSections = parentData.postSectionsMap[params.slug];
+  if (!post || !component || !postSections) {
     error(404, `Could not find ${params.slug}`);
   }
 
   return {
     component,
     post,
-    postToc,
+    postSections,
   };
 };

@@ -1,5 +1,5 @@
 import FlexSearch from 'flexsearch';
-import type { PostTocs } from '../routes/api/posts/toc/+server';
+import type { PostSectionsMap } from '../routes/api/posts/toc/+server';
 
 export interface SearchIndexEntry {
   slug: string;
@@ -22,12 +22,12 @@ export type SearchResults = SearchResult[];
 let flexIndex: FlexSearch.Index;
 let searchItems: SearchIndexEntries;
 
-export function createPostsIndex(postTocs: PostTocs) {
+export function createPostsIndex(postSectionsMap: PostSectionsMap) {
   flexIndex = new FlexSearch.Index({ tokenize: 'forward' });
 
   searchItems = {};
-  for (const [slug, postToc] of Object.entries(postTocs)) {
-    for (const [id, props] of Object.entries(postToc)) {
+  for (const [slug, postSection] of Object.entries(postSectionsMap)) {
+    for (const [id, props] of Object.entries(postSection)) {
       const searchIndexEntryId = `${slug}#${id}`;
       const searchIndexEntry: SearchIndexEntry = {
         slug,

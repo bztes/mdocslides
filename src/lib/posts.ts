@@ -17,16 +17,16 @@ export interface PostTree {
   children: PostTree[];
 }
 
-export interface PostTocEntry {
+export interface PostSection {
   title: string;
   content: string;
 }
 
-export type PostToc = Record<string, PostTocEntry>;
+export type PostSections = Record<string, PostSection>;
 
 export interface MdFile {
   metadata: PostMetadata;
-  toc: PostToc;
+  sections: PostSections;
   default: Component;
 }
 

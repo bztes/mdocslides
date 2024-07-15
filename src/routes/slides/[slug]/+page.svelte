@@ -6,7 +6,7 @@
 
   let postElem: HTMLElement | undefined = $state();
 
-  let slideIds = $derived(Object.keys(data.postToc));
+  let slideIds = $derived(Object.keys(data.postSections));
 
   let selectedSlideIndex = $state(-1);
   let selectedSlideId = $state<string>();
@@ -32,7 +32,7 @@
   });
 
   $effect(() => {
-    if (visibleSlideElem && tocVisible) {
+    if (visibleSlideElem && overviewVisible) {
       visibleSlideElem.scrollIntoView({ block: 'nearest' });
     } else {
       window.scrollTo(0, 0);
@@ -43,13 +43,13 @@
     selectedSlideId = getIdFromHash();
   });
 
-  let tocVisible = $state(false);
+  let overviewVisible = $state(false);
 
   function handleKeyDown(e: KeyboardEvent) {
     if (e.key === 't') {
-      tocVisible = !tocVisible;
+      overviewVisible = !overviewVisible;
     } else if (e.key == 'Escape') {
-      tocVisible = false;
+      overviewVisible = false;
     } else {
       return;
     }
@@ -59,7 +59,7 @@
 
   function handleHashChange() {
     selectedSlideId = getIdFromHash();
-    tocVisible = false;
+    overviewVisible = false;
   }
 
   function getIdFromHash() {
@@ -81,7 +81,7 @@
 
 <SlideControls {slideIds} bind:selectedSlideIndex bind:selectedSlideId />
 
-<post bind:this={postElem} class:toc={tocVisible}>
+<post bind:this={postElem} class:overviewVisible>
   <svelte:component this={data.component} />
   <div class="pageNumber">{selectedSlideIndex + 1} / {slideIds.length}</div>
 </post>
@@ -101,25 +101,25 @@
     bottom: 1rem;
   }
 
-  post.toc {
+  post.overviewVisible {
     overflow: auto;
     cursor: default;
   }
 
-  post.toc :global(.rehype-code-title button) {
+  post.overviewVisible :global(.rehype-code-title button) {
     display: none;
   }
 
-  post.toc :global(.rehype-code-title button) {
+  post.overviewVisible :global(.rehype-code-title button) {
     display: none;
   }
 
-  post.toc :global(h1),
-  post.toc :global(h2) {
+  post.overviewVisible :global(h1),
+  post.overviewVisible :global(h2) {
     position: static;
   }
 
-  post.toc :global(a.icon-link) {
+  post.overviewVisible :global(a.icon-link) {
     display: grid;
     justify-content: center;
     align-items: center;
@@ -131,7 +131,7 @@
     border-radius: 0.5rem;
   }
 
-  post.toc :global(section) {
+  post.overviewVisible :global(section) {
     position: relative;
     display: block;
     padding: 1rem;
@@ -142,18 +142,18 @@
     box-shadow: #959da533 0px 8px 24px;
   }
 
-  post.toc :global(section:not(.visible):hover) {
+  post.overviewVisible :global(section:not(.visible):hover) {
     border: 1px solid var(--primary);
   }
 
-  post.toc :global(section:not(:has(section))) {
+  post.overviewVisible :global(section:not(:has(section))) {
     width: 300px;
     height: 400px;
     overflow: hidden;
     overflow: clip;
   }
 
-  post.toc :global(section.visible) {
+  post.overviewVisible :global(section.visible) {
     outline: 3px solid var(--primary);
     outline-offset: -1px;
   }

@@ -1,15 +1,15 @@
-import { mdFiles, type PostToc, type Slug } from '$lib/posts';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import { mdFiles, type PostSections, type Slug } from '$lib/posts';
 
 export const prerender = true;
 
-export type PostTocs = Record<Slug, PostToc>;
+export type PostSectionsMap = Record<Slug, PostSections>;
 
-const postTocs: PostTocs = {};
+const postSectionsMap: PostSectionsMap = {};
 
 for (const [slug, mdFile] of Object.entries(mdFiles)) {
-  postTocs[slug] = mdFile.toc;
+  postSectionsMap[slug] = mdFile.sections;
 }
 
-export const GET: RequestHandler = () => json(postTocs);
+export const GET: RequestHandler = () => json(postSectionsMap);

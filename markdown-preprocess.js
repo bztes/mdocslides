@@ -57,7 +57,7 @@ function toHtml(content) {
         value: 'link',
       },
     })
-    .use(rehypeTocData)
+    .use(rehypeSectionsData)
     .use(rehypeStringify, {
       allowDangerousHtml: true,
       allowDangerousCharacters: true,
@@ -82,7 +82,7 @@ export async function processMarkdown(content, filename) {
   parsedContent.scripts.push(`
 	  <script context="module">
       export const metadata = ${JSON.stringify(vFile.data.frontmatter)};
-	    export const toc = ${JSON.stringify(vFile.data.toc)};
+	    export const sections = ${JSON.stringify(vFile.data.sections)};
     </script>
     `);
 
@@ -142,18 +142,18 @@ function rehypeEscapeSvelte() {
   };
 }
 
-function rehypeTocData() {
+function rehypeSectionsData() {
   return (tree, file) => {
     let id = '';
     let title = '';
     let content = '';
 
-    file.data.toc = {};
+    file.data.sections = {};
 
     visit(tree, (node) => {
       if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(node.tagName)) {
         if (id) {
-          file.data.toc[id] = { title, content };
+          file.data.sections[id] = { title, content };
         }
         id = node.properties.id;
         title = node.children
@@ -167,7 +167,7 @@ function rehypeTocData() {
     });
 
     if (id) {
-      file.data.toc[id] = { title, content };
+      file.data.sections[id] = { title, content };
     }
   };
 }
