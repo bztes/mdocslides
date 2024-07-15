@@ -1,5 +1,5 @@
 import FlexSearch from 'flexsearch';
-import type { PostSectionsMap } from '../routes/api/posts/toc/+server';
+import type { PostSectionsMap } from '../routes/api/posts/sections/+server';
 
 export interface SearchIndexEntry {
   slug: string;
