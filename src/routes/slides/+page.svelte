@@ -1,5 +1,5 @@
 <script lang="ts">
-  import PostsMenu from '$lib/ui/ArticlesMenu.svelte';
+  import PostsMenu from '$lib/ui/PostsMenu.svelte';
 
   let { data } = $props();
 </script>

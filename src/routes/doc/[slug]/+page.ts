@@ -1,4 +1,4 @@
-import { postComponents } from '$lib/articles';
+import { postComponents } from '$lib/posts';
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 

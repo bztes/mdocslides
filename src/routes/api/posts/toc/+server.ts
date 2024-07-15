@@ -1,4 +1,4 @@
-import { mdFiles, type PostToc, type Slug } from '$lib/articles';
+import { mdFiles, type PostToc, type Slug } from '$lib/posts';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 

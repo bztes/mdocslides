@@ -1,7 +1,7 @@
 <script lang="ts">
   import './style.css';
   import Header from './Header.svelte';
-  import PostsMenu from '$lib/ui/ArticlesMenu.svelte';
+  import PostsMenu from '$lib/ui/PostsMenu.svelte';
   import { setContext } from 'svelte';
 
   let { data, children } = $props();

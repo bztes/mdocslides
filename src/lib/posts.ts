@@ -39,7 +39,7 @@ export const postsMap: Record<Slug, Post> = {};
 export const postComponents: Record<Slug, Component> = {};
 
 export const mdFiles = globeImportToSlugMap<MdFile>(
-  import.meta.glob('/src/articles/**/*.md', { eager: true }),
+  import.meta.glob('/src/posts/**/*.md', { eager: true }),
 );
 
 function globeImportToSlugMap<T>(globImport: Record<string, T>) {
@@ -49,7 +49,7 @@ function globeImportToSlugMap<T>(globImport: Record<string, T>) {
 }
 
 function pathToSlug(path: string) {
-  return path.substring(14, path.length - 3).replace('/', '_');
+  return path.substring(11, path.length - 3).replace('/', '_');
 }
 
 function sortArticels(postsTree: PostTree[]) {

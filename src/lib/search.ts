@@ -1,5 +1,5 @@
 import FlexSearch from 'flexsearch';
-import type { PostTocs } from '../routes/api/articles/toc/+server';
+import type { PostTocs } from '../routes/api/posts/toc/+server';
 
 export interface SearchIndexEntry {
   slug: string;

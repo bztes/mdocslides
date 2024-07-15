@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Post, PostTree, Slug } from '$lib/articles';
+  import type { Post, PostTree, Slug } from '$lib/posts';
   import { page } from '$app/stores';
   import { base } from '$app/paths';
   import { getContext } from 'svelte';

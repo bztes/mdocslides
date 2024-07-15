@@ -1,7 +1,7 @@
-import { postsTree } from '$lib/articles';
+import { postsMap } from '$lib/posts';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 export const prerender = true;
 
-export const GET: RequestHandler = () => json(postsTree);
+export const GET: RequestHandler = () => json(postsMap);
