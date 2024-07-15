@@ -5,11 +5,11 @@
 </script>
 
 <svelte:head>
-  <title>{data.article.metadata.title}</title>
+  <title>{data.post.metadata.title}</title>
 </svelte:head>
 
 <CopyCode />
 
-<article>
+<post>
   <svelte:component this={data.component} />
-</article>
+</post>

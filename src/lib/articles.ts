@@ -2,31 +2,31 @@ import type { Component } from 'svelte';
 
 export type Slug = string;
 
-export interface ArticleMetadata {
+export interface PostMetadata {
   title: string;
   description: string;
 }
 
-export interface Article {
+export interface Post {
   slug: Slug;
-  metadata: ArticleMetadata;
+  metadata: PostMetadata;
 }
 
-export interface ArticleTree {
+export interface PostTree {
   slug: string;
-  children: ArticleTree[];
+  children: PostTree[];
 }
 
-export interface ArticleTocEntry {
+export interface PostTocEntry {
   title: string;
   content: string;
 }
 
-export type ArticleToc = Record<string, ArticleTocEntry>;
+export type PostToc = Record<string, PostTocEntry>;
 
 export interface MdFile {
-  metadata: ArticleMetadata;
-  toc: ArticleToc;
+  metadata: PostMetadata;
+  toc: PostToc;
   default: Component;
 }
 
@@ -34,9 +34,9 @@ export interface RawFile {
   default: string;
 }
 
-export const articlesTrees: ArticleTree[] = [];
-export const articlesMap: Record<Slug, Article> = {};
-export const articlesComponent: Record<Slug, Component> = {};
+export const postsTree: PostTree[] = [];
+export const postsMap: Record<Slug, Post> = {};
+export const postComponents: Record<Slug, Component> = {};
 
 export const mdFiles = globeImportToSlugMap<MdFile>(
   import.meta.glob('/src/articles/**/*.md', { eager: true }),
@@ -52,24 +52,24 @@ function pathToSlug(path: string) {
   return path.substring(14, path.length - 3).replace('/', '_');
 }
 
-function sortArticels(articlesTrees: ArticleTree[]) {
-  articlesTrees.sort((a, b) => {
+function sortArticels(postsTree: PostTree[]) {
+  postsTree.sort((a, b) => {
     if (a.children.length > 0 && b.children.length === 0) {
       return -1;
     }
     if (a.children.length === 0 && b.children.length > 0) {
       return 1;
     }
-    const titleA = articlesMap[a.slug].metadata.title;
-    const titleB = articlesMap[b.slug].metadata.title;
+    const titleA = postsMap[a.slug].metadata.title;
+    const titleB = postsMap[b.slug].metadata.title;
     return titleA.localeCompare(titleB);
   });
-  articlesTrees.forEach((c) => sortArticels(c.children));
+  postsTree.forEach((c) => sortArticels(c.children));
 }
 
 for (const [slug, mdFile] of Object.entries(mdFiles)) {
-  let article: Article | undefined = undefined;
-  let trees = articlesTrees;
+  let post: Post | undefined = undefined;
+  let trees = postsTree;
   const slugArray = slug.split('_');
   for (let i = 0; i < slugArray.length - 1; i++) {
     const slug = slugArray.slice(0, i + 1).join('_');
@@ -82,33 +82,33 @@ for (const [slug, mdFile] of Object.entries(mdFiles)) {
     }
     trees = tree.children;
 
-    // create article if not exists
-    article = articlesMap[slug];
-    if (!article) {
-      article = {
+    // create post if not exists
+    post = postsMap[slug];
+    if (!post) {
+      post = {
         metadata: {
           title: slugArray[i],
           description: '',
         },
         slug,
       };
-      articlesMap[slug] = article;
+      postsMap[slug] = post;
     }
   }
 
-  if (article && slugArray.at(-1) === 'index') {
-    Object.assign(article.metadata, mdFile.metadata);
+  if (post && slugArray.at(-1) === 'index') {
+    Object.assign(post.metadata, mdFile.metadata);
   } else {
-    const childArticle: Article = {
+    const childPost: Post = {
       metadata: mdFile.metadata,
       slug,
     };
-    articlesMap[slug] = childArticle;
-    article = childArticle;
+    postsMap[slug] = childPost;
+    post = childPost;
     trees.push({ slug, children: [] });
   }
 
-  articlesComponent[article.slug] = mdFile.default;
+  postComponents[post.slug] = mdFile.default;
 
-  sortArticels(articlesTrees);
+  sortArticels(postsTree);
 }

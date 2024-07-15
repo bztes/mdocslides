@@ -1,5 +1,5 @@
 import FlexSearch from 'flexsearch';
-import type { ArticleTocs } from '../routes/api/articles/toc/+server';
+import type { PostTocs } from '../routes/api/articles/toc/+server';
 
 export interface SearchIndexEntry {
   slug: string;
@@ -22,12 +22,12 @@ export type SearchResults = SearchResult[];
 let flexIndex: FlexSearch.Index;
 let searchItems: SearchIndexEntries;
 
-export function createArticlesIndex(articleTocs: ArticleTocs) {
+export function createPostsIndex(postTocs: PostTocs) {
   flexIndex = new FlexSearch.Index({ tokenize: 'forward' });
 
   searchItems = {};
-  for (const [slug, articleToc] of Object.entries(articleTocs)) {
-    for (const [id, props] of Object.entries(articleToc)) {
+  for (const [slug, postToc] of Object.entries(postTocs)) {
+    for (const [id, props] of Object.entries(postToc)) {
       const searchIndexEntryId = `${slug}#${id}`;
       const searchIndexEntry: SearchIndexEntry = {
         slug,
@@ -41,7 +41,7 @@ export function createArticlesIndex(articleTocs: ArticleTocs) {
   }
 }
 
-export function searchArticlesIndex(searchTerm: string): SearchResults {
+export function searchPostsIndex(searchTerm: string): SearchResults {
   const match = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const slugs = flexIndex.search(match);
   return slugs.map((s) => {

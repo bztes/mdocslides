@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { Article, ArticleTree, Slug } from '$lib/articles';
+  import type { Post, PostTree, Slug } from '$lib/articles';
   import { page } from '$app/stores';
   import { base } from '$app/paths';
   import { getContext } from 'svelte';
 
   type Props = {
-    trees: ArticleTree[];
-    map: Record<Slug, Article>;
+    trees: PostTree[];
+    map: Record<Slug, Post>;
     view: string;
   };
 
@@ -18,14 +18,14 @@
 <ul>
   {#each trees as tree}
     {@const href = `${base}/${view}/${tree.slug}`}
-    {@const article = map[tree.slug]}
+    {@const post = map[tree.slug]}
     <li>
       {#if tree.children.length > 0}
-        <span class="section">{article.metadata.title}</span>
+        <span class="section">{post.metadata.title}</span>
         <svelte:self trees={tree.children} {map} {view} />
       {:else}
-        <a {href} class="article" class:active={$page.url.pathname === href}>
-          {article.metadata.title}
+        <a {href} class="post" class:active={$page.url.pathname === href}>
+          {post.metadata.title}
         </a>
       {/if}
     </li>
@@ -48,7 +48,7 @@
     padding: 0.4rem 0.6rem;
   }
 
-  .article {
+  .post {
     font-weight: normal;
     display: block;
     padding: 0.4rem 0.6rem;
@@ -60,7 +60,7 @@
     color: var(--primary-content);
   }
 
-  .article:not(.active):hover {
+  .post:not(.active):hover {
     background-color: var(--base-200);
   }
 </style>

@@ -4,9 +4,9 @@
 
   let { data } = $props();
 
-  let articleElem: HTMLElement | undefined = $state();
+  let postElem: HTMLElement | undefined = $state();
 
-  let slideIds = $derived(Object.keys(data.articleToc));
+  let slideIds = $derived(Object.keys(data.postToc));
 
   let selectedSlideIndex = $state(-1);
   let selectedSlideId = $state<string>();
@@ -74,24 +74,24 @@
 <svelte:window onkeydown={handleKeyDown} onhashchange={handleHashChange} />
 
 <svelte:head>
-  <title>{data.article.metadata.title}</title>
+  <title>{data.post.metadata.title}</title>
 </svelte:head>
 
 <Progress max={slideIds.length} value={selectedSlideIndex + 1} />
 
 <SlideControls {slideIds} bind:selectedSlideIndex bind:selectedSlideId />
 
-<article bind:this={articleElem} class:toc={tocVisible}>
+<post bind:this={postElem} class:toc={tocVisible}>
   <svelte:component this={data.component} />
   <div class="pageNumber">{selectedSlideIndex + 1} / {slideIds.length}</div>
-</article>
+</post>
 
 <style>
-  article :global(section) {
+  post :global(section) {
     display: none;
   }
-  article :global(section.visible),
-  article :global(section:has(section.visible)) {
+  post :global(section.visible),
+  post :global(section:has(section.visible)) {
     display: block;
   }
 
@@ -101,25 +101,25 @@
     bottom: 1rem;
   }
 
-  article.toc {
+  post.toc {
     overflow: auto;
     cursor: default;
   }
 
-  article.toc :global(.rehype-code-title button) {
+  post.toc :global(.rehype-code-title button) {
     display: none;
   }
 
-  article.toc :global(.rehype-code-title button) {
+  post.toc :global(.rehype-code-title button) {
     display: none;
   }
 
-  article.toc :global(h1),
-  article.toc :global(h2) {
+  post.toc :global(h1),
+  post.toc :global(h2) {
     position: static;
   }
 
-  article.toc :global(a.icon-link) {
+  post.toc :global(a.icon-link) {
     display: grid;
     justify-content: center;
     align-items: center;
@@ -131,7 +131,7 @@
     border-radius: 0.5rem;
   }
 
-  article.toc :global(section) {
+  post.toc :global(section) {
     position: relative;
     display: block;
     padding: 1rem;
@@ -142,18 +142,18 @@
     box-shadow: #959da533 0px 8px 24px;
   }
 
-  article.toc :global(section:not(.visible):hover) {
+  post.toc :global(section:not(.visible):hover) {
     border: 1px solid var(--primary);
   }
 
-  article.toc :global(section:not(:has(section))) {
+  post.toc :global(section:not(:has(section))) {
     width: 300px;
     height: 400px;
     overflow: hidden;
     overflow: clip;
   }
 
-  article.toc :global(section.visible) {
+  post.toc :global(section.visible) {
     outline: 3px solid var(--primary);
     outline-offset: -1px;
   }

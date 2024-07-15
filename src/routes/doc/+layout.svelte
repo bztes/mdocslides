@@ -1,7 +1,7 @@
 <script lang="ts">
   import './style.css';
   import Header from './Header.svelte';
-  import ArticlesMenu from '$lib/ui/ArticlesMenu.svelte';
+  import PostsMenu from '$lib/ui/ArticlesMenu.svelte';
   import { setContext } from 'svelte';
 
   let { data, children } = $props();
@@ -14,11 +14,7 @@
 
   <aside>
     <nav>
-      <ArticlesMenu
-        trees={data.articleTrees}
-        map={data.articleMap}
-        view="doc"
-      />
+      <PostsMenu trees={data.postTrees} map={data.postMap} view="doc" />
     </nav>
   </aside>
 

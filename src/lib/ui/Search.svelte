@@ -1,6 +1,6 @@
 <script lang="ts">
   import { base } from '$app/paths';
-  import { createArticlesIndex, searchArticlesIndex } from '$lib/search';
+  import { createPostsIndex, searchPostsIndex } from '$lib/search';
   import { getContext, onMount } from 'svelte';
 
   let { visible = $bindable('false') } = $props();
@@ -12,15 +12,15 @@
   let view = getContext('view');
 
   onMount(async () => {
-    const articleTocs = await fetch(`${base}/api/articles/toc`).then((res) =>
+    const postTocs = await fetch(`${base}/api/articles/toc`).then((res) =>
       res.json(),
     );
-    createArticlesIndex(articleTocs);
+    createPostsIndex(postTocs);
     status = 'ready';
   });
 
   let results = $derived(
-    status === 'loading' ? [] : searchArticlesIndex(searchTerm),
+    status === 'loading' ? [] : searchPostsIndex(searchTerm),
   );
 
   $effect(() => {
