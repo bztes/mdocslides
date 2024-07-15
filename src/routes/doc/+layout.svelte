@@ -2,8 +2,11 @@
   import './style.css';
   import Header from './Header.svelte';
   import ArticlesMenu from '$lib/ui/ArticlesMenu.svelte';
+  import { setContext } from 'svelte';
 
   let { data, children } = $props();
+
+  setContext('view', 'doc');
 </script>
 
 <div class="page light-theme">

@@ -1,13 +1,15 @@
 <script lang="ts">
   import { base } from '$app/paths';
   import { createArticlesIndex, searchArticlesIndex } from '$lib/search';
-  import { onMount } from 'svelte';
+  import { getContext, onMount } from 'svelte';
 
   let { visible = $bindable('false') } = $props();
 
   let searchTerm = $state('');
   let status: 'loading' | 'ready' = $state('loading');
   let inputEl: HTMLElement | undefined = $state();
+
+  let view = getContext('view');
 
   onMount(async () => {
     const articleTocs = await fetch(`${base}/api/articles/toc`).then((res) =>
@@ -79,7 +81,7 @@
           {#each results as result}
             <li>
               <a
-                href={`${result.slug}#${result.id}`}
+                href={`${base}/${view}/${result.slug}#${result.id}`}
                 onclick={() => (visible = false)}
               >
                 <h2>

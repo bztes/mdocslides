@@ -2,6 +2,7 @@
   import type { Article, ArticleTree, Slug } from '$lib/articles';
   import { page } from '$app/stores';
   import { base } from '$app/paths';
+  import { getContext } from 'svelte';
 
   type Props = {
     trees: ArticleTree[];
@@ -9,7 +10,9 @@
     view: string;
   };
 
-  let { trees, map, view }: Props = $props();
+  let { trees, map }: Props = $props();
+
+  let view = getContext('view');
 </script>
 
 <ul>
