@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { createArticlesIndex, searchArticlesIndex } from '$lib/search';
   import { onMount } from 'svelte';
 
@@ -9,7 +10,7 @@
   let inputEl: HTMLElement | undefined = $state();
 
   onMount(async () => {
-    const articleTocs = await fetch('/api/articles/toc').then((res) =>
+    const articleTocs = await fetch(`${base}/api/articles/toc`).then((res) =>
       res.json(),
     );
     createArticlesIndex(articleTocs);

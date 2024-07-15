@@ -4,4 +4,4 @@
   let { data } = $props();
 </script>
 
-<ArticlesMenu trees={data.articleTrees} map={data.articleMap} base="slides" />
+<ArticlesMenu trees={data.articleTrees} map={data.articleMap} view="slides" />

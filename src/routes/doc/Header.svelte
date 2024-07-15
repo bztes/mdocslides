@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import Search from '../../lib/ui/Search.svelte';
 
   let searchVisible = $state(false);
@@ -18,7 +19,7 @@
 
 <header class:scrolled={isScrolled}>
   <div class="title">
-    <a href="/doc">MDocSlides</a>
+    <a href={`${base}/doc`}>MDocSlides</a>
   </div>
   <div>
     <button onclick={handleSearchClick} class="icon">search</button>

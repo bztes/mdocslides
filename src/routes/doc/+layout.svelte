@@ -14,7 +14,7 @@
       <ArticlesMenu
         trees={data.articleTrees}
         map={data.articleMap}
-        base="doc"
+        view="doc"
       />
     </nav>
   </aside>

@@ -1,24 +1,25 @@
 <script lang="ts">
   import type { Article, ArticleTree, Slug } from '$lib/articles';
   import { page } from '$app/stores';
+  import { base } from '$app/paths';
 
   type Props = {
     trees: ArticleTree[];
     map: Record<Slug, Article>;
-    base: string;
+    view: string;
   };
 
-  let { trees, map, base }: Props = $props();
+  let { trees, map, view }: Props = $props();
 </script>
 
 <ul>
   {#each trees as tree}
-    {@const href = `/${base}/${tree.slug}`}
+    {@const href = `${base}/${view}/${tree.slug}`}
     {@const article = map[tree.slug]}
     <li>
       {#if tree.children.length > 0}
         <span class="section">{article.metadata.title}</span>
-        <svelte:self trees={tree.children} {map} {base} />
+        <svelte:self trees={tree.children} {map} {view} />
       {:else}
         <a {href} class="article" class:active={$page.url.pathname === href}>
           {article.metadata.title}
