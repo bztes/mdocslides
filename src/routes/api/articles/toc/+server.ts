@@ -1,5 +1,6 @@
 import { mdFiles, type ArticleToc, type Slug } from '$lib/articles';
 import { json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 
 export const prerender = true;
 
@@ -11,6 +12,4 @@ for (const [slug, mdFile] of Object.entries(mdFiles)) {
   articleTocs[slug] = mdFile.toc;
 }
 
-export async function GET() {
-  return json(articleTocs);
-}
+export const GET: RequestHandler = () => json(articleTocs);
