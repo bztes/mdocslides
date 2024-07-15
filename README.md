@@ -1,5 +1,11 @@
 # mdocslides
 
+Svelte Template for creating presentation slides and handouts using markdown.
+
+Preview: https://bztes.github.io/mdocslides/
+
+Try it out: https://stackblitz.com/github/bztes/mdocslides
+
 ## Developing
 
 Once you've created a project and installed dependencies with `pnpm install` start a development server:
@@ -28,3 +34,4 @@ You can preview the production build with `npm run preview`.
 - https://joyofcode.xyz/sveltekit-markdown-blog
 - https://joyofcode.xyz/blazing-fast-sveltekit-search
 - https://github.com/stevekinney/svelte-markdown-example
+- https://mdsvex.pngwn.io/
