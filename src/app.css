@@ -8,6 +8,7 @@
   --font-sans: 'Overpass', sans-serif;
   --font-mono: 'Fira Mono', monospace;
   --filter-shadow: drop-shadow(2px 4px 16px #0003);
+  --transition-time: 150ms;
 }
 
 @media (prefers-color-scheme: light) {
@@ -68,13 +69,34 @@ input {
   border-radius: 0.25rem;
 }
 
-button {
-  border: 1px solid var(--base-300);
+button,
+.button {
+  --button: var(--base-100);
+  --button-content: var(--base-content);
+  --button-border: var(--base-300);
+  --button-hover: var(--base-200);
+  --button-hover-content: var(--base-content);
+
+  border: 1px solid var(--button-border);
   font-size: inherit;
   padding: 0.5rem 0.8rem;
   border-radius: 0.25rem;
   cursor: pointer;
-  background-color: var(--base-100);
+  background-color: var(--button);
+  color: var(--button-content);
+
+  transition: all var(--transition-time);
+}
+
+button:focus-visible,
+.button:focus-visible {
+  outline: 2px solid var(--base-content);
+}
+
+button:hover,
+.button:hover {
+  background-color: var(--button-hover);
+  color: var(--button-hover-content);
 }
 
 button:disabled {
@@ -83,10 +105,13 @@ button:disabled {
   opacity: 0.5;
 }
 
-button.button-primary {
-  background-color: var(--primary);
-  color: var(--primary-content);
-  border: none;
+button.button-primary,
+.button.button-primary {
+  --button: var(--primary);
+  --button-content: var(--primary-content);
+  --button-border: transparent;
+  --button-hover: var(--neutral);
+  --button-hover-content: var(--neutral-content);
 }
 
 .icon {
