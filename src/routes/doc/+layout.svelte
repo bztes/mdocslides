@@ -9,7 +9,7 @@
   setContext('view', 'doc');
 </script>
 
-<div class="page light-theme">
+<div class="page">
   <Header />
 
   <aside>

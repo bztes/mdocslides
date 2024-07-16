@@ -4,39 +4,40 @@
 
   let { data } = $props();
 
-  let postElem: HTMLElement | undefined = $state();
-
   let slideIds = $derived(Object.keys(data.postSections));
 
   let selectedSlideIndex = $state(-1);
   let selectedSlideId = $state<string>();
 
-  let visibleSlideElem: HTMLElement | undefined | null;
+  let selectedSlideElem: HTMLElement | undefined | null;
   $effect(() => {
-    if (visibleSlideElem) {
-      visibleSlideElem.classList.remove('visible');
+    if (selectedSlideElem) {
+      selectedSlideElem.classList.remove('visible');
     }
+
     if (selectedSlideId) {
-      visibleSlideElem =
+      selectedSlideElem =
         document.getElementById(selectedSlideId)?.parentElement;
     }
-    if (visibleSlideElem) {
-      visibleSlideElem.classList.add('visible');
+
+    if (selectedSlideElem) {
+      selectedSlideElem.classList.add('visible');
+      selectedSlideElem.scrollIntoView();
+    } else {
+      window.scrollTo(0, 0);
     }
 
     return () => {
-      if (visibleSlideElem) {
-        visibleSlideElem.classList.remove('visible');
+      if (selectedSlideElem) {
+        selectedSlideElem.classList.remove('visible');
       }
     };
   });
 
   $effect(() => {
-    if (visibleSlideElem && overviewVisible) {
-      visibleSlideElem.scrollIntoView({ block: 'nearest' });
-    } else {
-      window.scrollTo(0, 0);
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    overviewVisible;
+    selectedSlideElem?.scrollIntoView({ block: 'nearest' });
   });
 
   $effect(() => {
@@ -69,6 +70,11 @@
     }
     return id;
   }
+
+  function handleScrollEnd(e: Event) {
+    const elem = e.currentTarget as HTMLElement;
+    selectedSlideIndex = Math.round(elem.scrollLeft / elem.clientWidth);
+  }
 </script>
 
 <svelte:window onkeydown={handleKeyDown} onhashchange={handleHashChange} />
@@ -81,31 +87,45 @@
 
 <SlideControls {slideIds} bind:selectedSlideIndex bind:selectedSlideId />
 
-<article bind:this={postElem} class:overviewVisible>
+<article class:overviewVisible onscrollend={handleScrollEnd}>
   <svelte:component this={data.component} />
   <div class="pageNumber">{selectedSlideIndex + 1} / {slideIds.length}</div>
 </article>
 
 <style>
   article {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none; /* Chrome an Safari */
+    }
+
+    :global(section) {
+      flex: 0 0 auto;
+      width: 100%;
+      padding: 4rem;
+      box-sizing: border-box;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+    }
+
     .pageNumber {
       position: fixed;
       right: 1rem;
       bottom: 1rem;
-    }
-
-    :global(section) {
-      display: none;
-    }
-
-    :global(section.visible) {
-      display: block;
     }
   }
 
   article.overviewVisible {
     overflow: auto;
     cursor: default;
+    flex-wrap: wrap;
 
     :global(.rehype-code-title button) {
       display: none;
@@ -139,7 +159,6 @@
       margin: 1rem;
       border: 1px solid var(--base-300);
       border-radius: 0.5rem;
-      float: left;
       box-shadow: #959da533 0px 8px 24px;
       width: 300px;
       height: 400px;
