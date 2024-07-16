@@ -14,7 +14,7 @@
 
   <aside>
     <nav>
-      <PostsMenu trees={data.postTrees} map={data.postMap} view="doc" />
+      <PostsMenu tree={data.postsTree} map={data.postsMap} />
     </nav>
   </aside>
 

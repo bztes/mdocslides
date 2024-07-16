@@ -12,10 +12,16 @@ export interface Post {
   metadata: PostMetadata;
 }
 
-export interface PostTree {
+export interface PostsTreeNode {
   slug: string;
-  children: PostTree[];
+  children: PostsTree;
 }
+
+export type PostsTree = PostsTreeNode[];
+
+export type PostsMap = Record<Slug, Post>;
+
+export type PostComponentsMap = Record<Slug, Component>;
 
 export interface PostSection {
   title: string;
@@ -34,9 +40,9 @@ export interface RawFile {
   default: string;
 }
 
-export const postsTree: PostTree[] = [];
-export const postsMap: Record<Slug, Post> = {};
-export const postComponents: Record<Slug, Component> = {};
+export const postsTree: PostsTree = [];
+export const postsMap: PostsMap = {};
+export const postComponents: PostComponentsMap = {};
 
 export const mdFiles = globeImportToSlugMap<MdFile>(
   import.meta.glob('/src/posts/**/*.md', { eager: true }),
@@ -52,7 +58,7 @@ function pathToSlug(path: string) {
   return path.substring(11, path.length - 3).replace('/', '_');
 }
 
-function sortArticels(postsTree: PostTree[]) {
+function sortPosts(postsTree: PostsTree) {
   postsTree.sort((a, b) => {
     if (a.children.length > 0 && b.children.length === 0) {
       return -1;
@@ -64,7 +70,7 @@ function sortArticels(postsTree: PostTree[]) {
     const titleB = postsMap[b.slug].metadata.title;
     return titleA.localeCompare(titleB);
   });
-  postsTree.forEach((c) => sortArticels(c.children));
+  postsTree.forEach((c) => sortPosts(c.children));
 }
 
 for (const [slug, mdFile] of Object.entries(mdFiles)) {
@@ -110,5 +116,5 @@ for (const [slug, mdFile] of Object.entries(mdFiles)) {
 
   postComponents[post.slug] = mdFile.default;
 
-  sortArticels(postsTree);
+  sortPosts(postsTree);
 }

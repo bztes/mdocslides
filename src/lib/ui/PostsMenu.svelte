@@ -1,28 +1,27 @@
 <script lang="ts">
-  import type { Post, PostTree, Slug } from '$lib/posts';
+  import type { PostsMap, PostsTree } from '$lib/posts';
   import { page } from '$app/stores';
   import { base } from '$app/paths';
   import { getContext } from 'svelte';
 
   type Props = {
-    trees: PostTree[];
-    map: Record<Slug, Post>;
-    view: string;
+    tree: PostsTree;
+    map: PostsMap;
   };
 
-  let { trees, map }: Props = $props();
+  let { tree, map }: Props = $props();
 
   let view = getContext('view');
 </script>
 
 <ul>
-  {#each trees as tree}
-    {@const href = `${base}/${view}/${tree.slug}`}
-    {@const post = map[tree.slug]}
+  {#each tree as treeNode}
+    {@const href = `${base}/${view}/${treeNode.slug}`}
+    {@const post = map[treeNode.slug]}
     <li>
-      {#if tree.children.length > 0}
+      {#if treeNode.children.length > 0}
         <span class="section">{post.metadata.title}</span>
-        <svelte:self trees={tree.children} {map} {view} />
+        <svelte:self tree={treeNode.children} {map} {view} />
       {:else}
         <a {href} class="post" class:active={$page.url.pathname === href}>
           {post.metadata.title}

@@ -6,7 +6,7 @@ export const load: PageLoad = async ({ params, parent }) => {
   const parentData = await parent();
 
   const component = postComponents[params.slug];
-  const post = parentData.postMap[params.slug];
+  const post = parentData.postsMap[params.slug];
   if (!post || !component) {
     error(404, `Could not find ${params.slug}`);
   }
