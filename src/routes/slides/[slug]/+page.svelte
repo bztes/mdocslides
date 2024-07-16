@@ -90,8 +90,7 @@
   post :global(section) {
     display: none;
   }
-  post :global(section.visible),
-  post :global(section:has(section.visible)) {
+  post :global(section.visible) {
     display: block;
   }
 
@@ -140,17 +139,14 @@
     border-radius: 0.5rem;
     float: left;
     box-shadow: #959da533 0px 8px 24px;
-  }
-
-  post.overviewVisible :global(section:not(.visible):hover) {
-    border: 1px solid var(--primary);
-  }
-
-  post.overviewVisible :global(section:not(:has(section))) {
     width: 300px;
     height: 400px;
     overflow: hidden;
     overflow: clip;
+  }
+
+  post.overviewVisible :global(section:not(.visible):hover) {
+    border: 1px solid var(--primary);
   }
 
   post.overviewVisible :global(section.visible) {

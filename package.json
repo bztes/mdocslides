@@ -45,7 +45,6 @@
     "remark-parse": "^11.0.0",
     "remark-parse-frontmatter": "^1.0.3",
     "remark-rehype": "^11.1.0",
-    "remark-sectionize": "^2.0.0",
     "remark-unwrap-images": "^4.0.0",
     "svelte": "5.0.0-next.179",
     "svelte-check": "^3.8.4",

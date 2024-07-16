@@ -4,7 +4,6 @@ import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import { unified } from 'unified';
 import remarkUnwrapImages from 'remark-unwrap-images';
-import remarkSectionize from 'remark-sectionize';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeShiki from '@shikijs/rehype';
@@ -121,6 +120,41 @@ function parseSvelte(content) {
   });
 
   return { scripts, styles, text };
+}
+
+function remarkSectionize() {
+  function isHeading(node) {
+    return node.type === 'heading';
+  }
+
+  function countChildren(children, startIndex) {
+    for (let i = startIndex; i < children.length; i++) {
+      if (isHeading(children[i])) {
+        return i - startIndex;
+      }
+    }
+    return children.length - startIndex;
+  }
+
+  return (tree) => {
+    const children = tree.children ?? [];
+    for (let index = 0; index < children.length; index++) {
+      const node = children[index];
+      if (!isHeading(node)) {
+        continue;
+      }
+
+      const childCount = countChildren(children, index + 1);
+      const section = {
+        type: 'section',
+        data: {
+          hName: 'section',
+        },
+        children: [],
+      };
+      section.children = children.splice(index, childCount + 1, section);
+    }
+  };
 }
 
 function rehypeEscapeSvelte() {
