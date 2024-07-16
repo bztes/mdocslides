@@ -6,14 +6,17 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "npm run test:integration && npm run test:unit",
+    "format": "prettier --write .",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --check . && eslint .",
-    "format": "prettier --write .",
-    "test:integration": "playwright test",
-    "test:unit": "vitest",
-    "precommit": "pnpm check && pnpm lint && pnpm build"
+    "lint": "pnpm lint:prettier && pnpm lint:es",
+    "lint:prettier": "prettier --check .",
+    "lint:es": "eslint .",
+    "test": "npm run test:e2e && npm run test:unit",
+    "test:e2e": "playwright test",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "precommit": "pnpm check && pnpm lint && pnpm test && pnpm build"
   },
   "devDependencies": {
     "@fontsource/fira-mono": "^5.0.13",
