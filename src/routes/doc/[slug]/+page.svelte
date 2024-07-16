@@ -10,6 +10,6 @@
 
 <CopyCode />
 
-<post>
+<article>
   <svelte:component this={data.component} />
-</post>
+</article>

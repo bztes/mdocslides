@@ -81,16 +81,16 @@
 
 <SlideControls {slideIds} bind:selectedSlideIndex bind:selectedSlideId />
 
-<post bind:this={postElem} class:overviewVisible>
+<article bind:this={postElem} class:overviewVisible>
   <svelte:component this={data.component} />
   <div class="pageNumber">{selectedSlideIndex + 1} / {slideIds.length}</div>
-</post>
+</article>
 
 <style>
-  post :global(section) {
+  article :global(section) {
     display: none;
   }
-  post :global(section.visible) {
+  article :global(section.visible) {
     display: block;
   }
 
@@ -100,25 +100,25 @@
     bottom: 1rem;
   }
 
-  post.overviewVisible {
+  article.overviewVisible {
     overflow: auto;
     cursor: default;
   }
 
-  post.overviewVisible :global(.rehype-code-title button) {
+  article.overviewVisible :global(.rehype-code-title button) {
     display: none;
   }
 
-  post.overviewVisible :global(.rehype-code-title button) {
+  article.overviewVisible :global(.rehype-code-title button) {
     display: none;
   }
 
-  post.overviewVisible :global(h1),
-  post.overviewVisible :global(h2) {
+  article.overviewVisible :global(h1),
+  article.overviewVisible :global(h2) {
     position: static;
   }
 
-  post.overviewVisible :global(a.icon-link) {
+  article.overviewVisible :global(a.icon-link) {
     display: grid;
     justify-content: center;
     align-items: center;
@@ -130,7 +130,7 @@
     border-radius: 0.5rem;
   }
 
-  post.overviewVisible :global(section) {
+  article.overviewVisible :global(section) {
     position: relative;
     display: block;
     padding: 1rem;
@@ -145,11 +145,11 @@
     overflow: clip;
   }
 
-  post.overviewVisible :global(section:not(.visible):hover) {
+  article.overviewVisible :global(section:not(.visible):hover) {
     border: 1px solid var(--primary);
   }
 
-  post.overviewVisible :global(section.visible) {
+  article.overviewVisible :global(section.visible) {
     outline: 3px solid var(--primary);
     outline-offset: -1px;
   }
