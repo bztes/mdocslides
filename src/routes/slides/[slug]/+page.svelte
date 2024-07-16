@@ -87,70 +87,73 @@
 </article>
 
 <style>
-  article :global(section) {
-    display: none;
-  }
-  article :global(section.visible) {
-    display: block;
-  }
+  article {
+    .pageNumber {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+    }
 
-  .pageNumber {
-    position: fixed;
-    right: 1rem;
-    bottom: 1rem;
+    :global(section) {
+      display: none;
+    }
+
+    :global(section.visible) {
+      display: block;
+    }
   }
 
   article.overviewVisible {
     overflow: auto;
     cursor: default;
-  }
 
-  article.overviewVisible :global(.rehype-code-title button) {
-    display: none;
-  }
+    :global(.rehype-code-title button) {
+      display: none;
+    }
 
-  article.overviewVisible :global(.rehype-code-title button) {
-    display: none;
-  }
+    :global(.rehype-code-title button) {
+      display: none;
+    }
 
-  article.overviewVisible :global(h1),
-  article.overviewVisible :global(h2) {
-    position: static;
-  }
+    :global(h1),
+    :global(h2) {
+      position: static;
+    }
 
-  article.overviewVisible :global(a.icon-link) {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    color: transparent;
-    border-radius: 0.5rem;
-  }
+    :global(a.icon-link) {
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: transparent;
+      border-radius: 0.5rem;
+    }
 
-  article.overviewVisible :global(section) {
-    position: relative;
-    display: block;
-    padding: 1rem;
-    margin: 1rem;
-    border: 1px solid var(--base-300);
-    border-radius: 0.5rem;
-    float: left;
-    box-shadow: #959da533 0px 8px 24px;
-    width: 300px;
-    height: 400px;
-    overflow: hidden;
-    overflow: clip;
-  }
+    :global(section) {
+      position: relative;
+      display: block;
+      padding: 1rem;
+      margin: 1rem;
+      border: 1px solid var(--base-300);
+      border-radius: 0.5rem;
+      float: left;
+      box-shadow: #959da533 0px 8px 24px;
+      width: 300px;
+      height: 400px;
+      overflow: hidden;
+      overflow: clip;
+    }
 
-  article.overviewVisible :global(section:not(.visible):hover) {
-    border: 1px solid var(--primary);
-  }
+    :global(section:not(.visible):hover) {
+      border: 1px solid var(--primary);
+    }
 
-  article.overviewVisible :global(section.visible) {
-    outline: 3px solid var(--primary);
-    outline-offset: -1px;
+    :global(section.visible) {
+      outline: 3px solid var(--primary);
+      outline-offset: -1px;
+    }
   }
 </style>
