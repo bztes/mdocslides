@@ -1,6 +1,7 @@
 <script lang="ts">
   import Progress from '$lib/ui/Progress.svelte';
   import SlideControls from '../SlideControls.svelte';
+  import SlidesOverlay from '../SlidesOverlay.svelte';
 
   let { data } = $props();
 
@@ -46,18 +47,6 @@
 
   let overviewVisible = $state(false);
 
-  function handleKeyDown(e: KeyboardEvent) {
-    if (e.key === 't') {
-      overviewVisible = !overviewVisible;
-    } else if (e.key == 'Escape') {
-      overviewVisible = false;
-    } else {
-      return;
-    }
-
-    e.preventDefault();
-  }
-
   function handleHashChange() {
     selectedSlideId = getIdFromHash();
     overviewVisible = false;
@@ -77,7 +66,7 @@
   }
 </script>
 
-<svelte:window onkeydown={handleKeyDown} onhashchange={handleHashChange} />
+<svelte:window onhashchange={handleHashChange} />
 
 <svelte:head>
   <title>{data.post.metadata.title}</title>
@@ -85,11 +74,21 @@
 
 <Progress max={slideIds.length} value={selectedSlideIndex + 1} />
 
-<SlideControls {slideIds} bind:selectedSlideIndex bind:selectedSlideId />
+<SlidesOverlay position="bottom-left">
+  <SlideControls
+    {slideIds}
+    bind:selectedSlideIndex
+    bind:selectedSlideId
+    bind:overviewVisible
+  />
+</SlidesOverlay>
+
+<SlidesOverlay position="bottom-right">
+  {selectedSlideIndex + 1} / {slideIds.length}
+</SlidesOverlay>
 
 <article class:overviewVisible onscrollend={handleScrollEnd}>
   <svelte:component this={data.component} />
-  <div class="pageNumber">{selectedSlideIndex + 1} / {slideIds.length}</div>
 </article>
 
 <style>
@@ -113,12 +112,6 @@
       box-sizing: border-box;
       scroll-snap-align: center;
       scroll-snap-stop: always;
-    }
-
-    .pageNumber {
-      position: fixed;
-      right: 1rem;
-      bottom: 1rem;
     }
   }
 

@@ -1,15 +1,15 @@
 <script lang="ts">
-  let controlsVisible = $state(false);
-
   interface Props {
     slideIds: string[];
-    selectedSlideIndex: number;
-    selectedSlideId: string | undefined;
+    selectedSlideIndex?: number;
+    selectedSlideId?: string;
+    overviewVisible?: boolean;
   }
   let {
     slideIds,
     selectedSlideIndex = $bindable(-1),
-    selectedSlideId = $bindable(),
+    selectedSlideId = $bindable<string>(),
+    overviewVisible = $bindable(false),
   }: Props = $props();
 
   let hasPreviousSlide = $derived(selectedSlideIndex > 0);
@@ -30,12 +30,14 @@
   });
 
   function handleKeyDown(e: KeyboardEvent) {
-    if (e.key === 'c') {
-      controlsVisible = !controlsVisible;
-    } else if (e.key === 'ArrowLeft') {
+    if (e.key === 'ArrowLeft') {
       selectPreviousSlide();
     } else if (e.key === 'ArrowRight' || e.key === ' ') {
       selectNextSlide();
+    } else if (e.key === 'o') {
+      overviewVisible = !overviewVisible;
+    } else if (e.key === 'Escape' || e.key === 'Enter') {
+      overviewVisible = false;
     } else {
       return;
     }
@@ -54,48 +56,36 @@
       selectedSlideIndex++;
     }
   }
+
+  function toggleOverview() {
+    overviewVisible = !overviewVisible;
+  }
 </script>
 
 <svelte:window onkeydown={handleKeyDown} />
 
-<div class="controls" class:visible={controlsVisible}>
-  <button
-    onclick={selectPreviousSlide}
-    class="button icon fixed previous_section"
-    disabled={!hasPreviousSlide}
-  >
-    arrow_back
-  </button>
-  <button
-    onclick={selectNextSlide}
-    class="button icon fixed next_section"
-    disabled={!hasNextSlide}
-  >
-    arrow_forward
-  </button>
-</div>
-
-<style>
-  .controls {
-    visibility: hidden;
-
-    &.visible {
-      visibility: visible;
-    }
-  }
-
-  .fixed {
-    position: fixed;
-    z-index: 200;
-  }
-
-  .previous_section {
-    left: 1rem;
-    top: 50vh;
-  }
-
-  .next_section {
-    right: 1rem;
-    top: 50vh;
-  }
-</style>
+<button
+  onclick={selectPreviousSlide}
+  class="icon"
+  disabled={!hasPreviousSlide}
+  title="Previous Slide"
+>
+  arrow_back
+</button>
+<button
+  onclick={selectNextSlide}
+  class="icon"
+  disabled={!hasNextSlide}
+  title="Next Slide"
+>
+  arrow_forward
+</button>
+<button
+  onclick={toggleOverview}
+  class="icon"
+  class:active={overviewVisible}
+  title="Slides Overview"
+>
+  grid_view
+</button>
+<a href="/slides" class="button icon" title="Table of Content">toc</a>

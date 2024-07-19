@@ -22,7 +22,9 @@
     <a href={`${base}/doc`}>MDocSlides</a>
   </div>
   <div>
-    <button onclick={handleSearchClick} class="icon">search</button>
+    <button onclick={handleSearchClick} class="icon" title="Search">
+      search
+    </button>
   </div>
 </header>
 
