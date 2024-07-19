@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { base } from '$app/paths';
+
   interface Props {
     slideIds: string[];
     selectedSlideIndex?: number;
@@ -88,4 +90,4 @@
 >
   grid_view
 </button>
-<a href="/slides" class="button icon" title="Table of Content">toc</a>
+<a href={`${base}/slides`} class="button icon" title="Table of Content">toc</a>
