@@ -3,7 +3,7 @@
   import { createPostsIndex, searchPostsIndex } from '$lib/search';
   import { getContext, onMount } from 'svelte';
 
-  let { visible = $bindable('false') } = $props();
+  let { visible = $bindable(false) } = $props();
 
   let searchTerm = $state('');
   let status: 'loading' | 'ready' = $state('loading');
