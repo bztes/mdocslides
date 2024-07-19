@@ -76,7 +76,14 @@ export async function processMarkdown(content, filename) {
   // generate html and  undo escaping of &-character
   let text = parsedContent.text.join('');
   const vFile = await toHtml(text);
-  text = vFile.toString().replace(/&#x26;#(123|125|96|92);/g, '&#$1;');
+  text = vFile.toString();
+
+  // Postprocess
+  text = text.replace(/&#x26;#(123|125|96|92);/g, '&#$1;');
+  text = text.replaceAll(
+    /data-dispatchevent-on([a-z]+)="([a-z]+)"/g,
+    'on$1={(e) => e.currentTarget.dispatchEvent(new Event("$2"))}',
+  );
 
   parsedContent.scripts.push(`
 	  <script context="module">
@@ -221,7 +228,10 @@ export function rehypeCopyCode() {
         {
           type: 'element',
           tagName: 'button',
-          properties: { className: ['copy', 'icon'] },
+          properties: {
+            className: ['copy', 'icon'],
+            'data-dispatchevent-onclick': 'copycode',
+          },
           children: [{ type: 'text', value: 'content_copy' }],
         },
       ];
